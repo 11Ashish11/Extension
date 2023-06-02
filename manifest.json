@@ -1,34 +1,26 @@
 {
-  "name": "Ashish Extension",
+  "manifest_version": 3,
+  "name": "Color Transformer Extension",
   "version": "1.0",
-  "description": "This is a demo extension by Ashish Bhoya",
-  "permissions": ["storage", "tabs"],
+  "permissions": ["activeTab", "storage"],
+  "content_scripts": [
+    { "matches": ["*://*/*"], "js": ["contentScript.js"], "all_frames": true }
+  ],
   "host_permissions": ["*://*/*"],
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "js": ["contentScript.js"]
-    }
-  ],
-  "web_accessible_resources": [
-      {
-          "resources": [
-              "assests/bookmark.jpeg"
-          ],
-          "matches": ["*://*/*"]
-      }
-  ],
   "action": {
-      "default_icon": {
-          "16" : "assests/icon.jpeg",
-          "32" : "assests/icon.jpeg",
-          "64" : "assests/icon.jpeg"
-      },
-      "default_title": "My YT Bookmarks",
-      "default_popup": "popup.html"
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "assests/icon.jpeg",
+      "48": "assests/icon.jpeg",
+      "128": "assests/icon.jpeg"
+    }
   },
-  "manifest_version": 3
+  "icons": {
+    "16": "assests/icon.jpeg",
+    "48": "assests/icon.jpeg",
+    "128": "assests/icon.jpeg"
+  }
 }

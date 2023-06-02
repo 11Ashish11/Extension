@@ -1,8 +1,20 @@
-console.log("This is Ashish Testing Random in content Script File");
+// contentScript.js
+function applyColor(color) {
+  document.body.style.backgroundColor = color;
+  chrome.tabs.insertCSS({ code: `body { background-color: ${color} !important; }` });
+}
 
-(() => {
-    chrome.runtime.onMessage.addListener((obj, sender , response) => {
-        console.log("This is inside the chrome Runtime One");
-        console.log(obj);
-    })
-})
+document.getElementById('saveButton').addEventListener('click', function () {
+  console.log("Extension Loaded !!!");
+  const color = document.getElementById('colorPicker').value;
+  chrome.storage.sync.set({ 'selectedColor': color }, function () {
+    console.log('Color saved:', color);
+    applyColor(color);
+  });
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === 'applyColor') {
+    applyColor(request.color);
+  }
+});

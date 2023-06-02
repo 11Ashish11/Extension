@@ -1,3 +1,8 @@
-chrome.tabs.onUpdated.addListener((tabID,tab) => {
-    console.log(tab.url);
-})
+// serviceWorker.js
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === 'applyColor') {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { action: 'applyColor', color: request.color });
+    });
+  }
+});
